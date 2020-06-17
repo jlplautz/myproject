@@ -208,3 +208,29 @@ class HomeTests(TestCase):
 - Setup Statis Files
   - criar o diretorio static na raiz do projeto
   - link getbootstrap.com -> copiar o Compiled CSS and JS
+  - copy the file css/bootstrap.min.css to our project’s css folder
+  - inserir npo settings.py
+  ```
+  STATIC_URL = '/static/'
+  STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'),]
+  ```
+  - tempĺates/home.html
+  ```
+  {% load static %}<!DOCTYPE html>
+  <html>
+  <head>
+    <meta charset="utf-8">
+    <title>Boards</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    ```
+  
+- habilitar Django Admin
+  - (myproject) myproject $ mng createsuperuser
+
+- registrar boards/admin.py
+```
+from django.contrib import admin
+from .models import Board
+
+admin.site.register(Board)
+```
