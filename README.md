@@ -205,3 +205,6 @@ class HomeTests(TestCase):
   - (myproject) myproject $ python manage.py test
   - (myproject) myproject $ python manage.py test --verbosity=2
 
+- Setup Statis Files
+  - criar o diretorio static na raiz do projeto
+  - link getbootstrap.com -> copiar o Compiled CSS and JS
