@@ -23,3 +23,22 @@ requirements:
   - Pipfile
   - Pipfile.lock
 ```
+
+- Projeto (myproject) foi criado
+  - (myproject) myproject $ django-admin startproject myproject .
+```
+(myproject) myproject $ tree
+.
+├── LICENSE
+├── manage.py
+├── myproject
+│   ├── asgi.py
+│   ├── __init__.py
+│   ├── settings.py
+│   ├── urls.py
+│   └── wsgi.py
+├── Pipfile
+├── Pipfile.lock
+├── README.md
+└── requirements.txt
+```
