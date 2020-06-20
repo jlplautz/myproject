@@ -234,3 +234,35 @@ from .models import Board
 
 admin.site.register(Board)
 ```
+
+- Criar herança de templates.
+  - base.html => master page
+  - home.html e topics.html => os templates que recebem a herança. (child templates)
+
+- Criar a navbar (top bar with menu) in the base.html
+```
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container">
+        <a class="navbar-brand" href="{% url 'home' %}">Django Boards</a>
+      </div>
+    </nav>
+```
+
+- Para alterar a letra (estilo de letras) tem p fonte da google
+  - https://fonts.google.com/
+  - file base.html
+  ```
+    <head>
+    <meta charset="utf-8">
+    <title>{% block title %}Django Boards{% endblock %}</title>
+    <link href="https://fonts.googleapis.com/css?family=Peralta" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/app.css' %}">
+  </head>
+  ```
+  - criar o diretorio static/css/app.css
+  ```
+  .navbar-brand {
+    font-family: 'Peralta', cursive;
+  }
+  ```
