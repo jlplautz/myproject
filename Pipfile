@@ -9,6 +9,7 @@ verify_ssl = true
 django = "*"
 flake8 = "*"
 pytest = "*"
+django-widget-tweaks = "*"
 
 [requires]
 python_version = "3.8"
