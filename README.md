@@ -267,3 +267,51 @@ admin.site.register(Board)
     font-family: 'Peralta', cursive;
   }
   ```
+  
+ _ Criar o formulario para receber input de usuario
+   - criar um novo URL no myproject/urls.py
+     - path('boards/<int:pk>/new/', views.new_topic, name='board_topic'),
+   - criar uma função no boards/views.py
+     ```
+     def new_topic(request, pk):
+         board = get_object_or_404(Board, pk=pk)
+         return render(request, 'new_topic.html', {'board': board})
+     ```
+   - criar um templates/new_topic.html
+   ```
+    {% extends 'base.html' %}
+
+    {% block title %}Start a New Topic{% endblock %}
+
+    {% block breadcrumb %}
+      <li class="breadcrumb-item"><a href="{% url 'home' %}">Boards</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'board_topics' board.pk %}">{{ board.name }}</a></li>
+      <li class="breadcrumb-item active">New topic</li>
+    {% endblock %}
+    {% block content %}
+    {% endblock %}
+   ```
+   - Rendering Bootstrap Forms
+     - myproject $ pipenv install django-widget-tweaks
+     - add it to the INSTALLED_APPS => 'widget_tweaks',
+     - templates/new_topic.html => {% load widget_tweaks %}
+   
+   - Reusable Forms Templates
+
+- Implementar Registro, login, logout, password reset, password change
+  - (myproject) myproject $ django-admin startapp accounts
+  - INSTALLED_APPS => 'accounts',
+  - accounts/views.py
+  - create the new template, named signup.html
+  - accounts/tests.py
+  - adding the Email Field to the Form => accounts/forms.py
+
+- improving the Tests Layout
+  -  https://www.toptal.com/designers/subtlepatterns/ => procurar um background pattern
+  - criar um diretorio static/img => depois de dezipado o file colocar no diretorio img
+  - cria o file static/css/accounts.css
+  - colocar o {% block stylesheet %} no templates/signup.html
+  
+  
+  
+  
