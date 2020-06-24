@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     # apps. terceiros
     'widget_tweaks',
     # apps. criadas
+    'accounts',
     'boards',
 ]
 
