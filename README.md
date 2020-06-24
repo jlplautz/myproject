@@ -260,6 +260,7 @@ admin.site.register(Board)
     <link rel="stylesheet" href="{% static 'css/app.css' %}">
   </head>
   ```
+  
   - criar o diretorio static/css/app.css
   ```
   .navbar-brand {
