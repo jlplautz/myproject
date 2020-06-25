@@ -312,6 +312,28 @@ admin.site.register(Board)
   - cria o file static/css/accounts.css
   - colocar o {% block stylesheet %} no templates/signup.html
   
+- criar logout view
+  - myproject/urls.py     => path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+  - myproject/settings.py => LOGOUT_REDIRECT_URL = 'home'
+  - Mostrar Menu para authenticação de Usuarios
+    - download from https://jquery.com/download/ -> compressed, production jQuery 3.2.1
+    - links para download
+      -  https://code.jquery.com/jquery-3.2.1.min.js
+      -  https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js
+      -  https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js
+  - alterar o templates/base.html => inserir opçoes de menu
+
+- criar login 
+  - myproject/urls.py => path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
+  - tmplates/base.html => <a href="{% url 'login' %}" class="btn btn-outline-secondary">Log in</a>
+  - criar o templates/login.html
+  - criar templates/base_accounts.html => {% extends 'base.html' %}
+  - usar o base_accounts.html => signup.html and login.html:
+     - templates/login.html => {% extends 'base_accounts.html' %}
+     - templates/signup.html => {% extends 'base_accounts.html' %}
+
+- Criar Tags para Template de cliente
+
   
   
   
