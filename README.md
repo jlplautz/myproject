@@ -333,7 +333,16 @@ admin.site.register(Board)
      - templates/signup.html => {% extends 'base_accounts.html' %}
 
 - Criar Tags para Template de cliente
+  - criar o package templatetags => file __init__.py and form_tags.py
+  - alterar o file templates/includes/form.html
+  - testar os tags templates
+  
+- Password Reset
+  - myproject/settings.py 
+    - EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+  - configurar rota no file urls.py
 
+  
   
   
   
