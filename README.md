@@ -342,7 +342,59 @@ admin.site.register(Board)
     - EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
   - configurar rota no file urls.py
 
+-  Criar proteção de Views para usuarios nao autorizados
+   - Django has a built-in view decorator to avoid that issue:
+     - boards/views.py
+     ```
+     from django.contrib.auth.decorators import login_required
+     @login_required
+     def new_topic(request, pk):
+         # ...
+     ```
+   - Configurar Login Next Redirect
+   ```
+   <form method="post" novalidate>
+     {% csrf_token %}
+     <input type="hidden" name="next" value="{{ next }}">
+     {% include 'includes/form.html' %}
+     <button type="submit" class="btn btn-primary btn-block">Log in</button>
+   </form>
+   ```
   
+   - Login Required Tests
+     - test_view_home.py will include the HomeTests class (view complete file contents)
+     - test_view_board_topics.py will include the BoardTopicsTests class (view complete file contents)
+     - test_view_new_topic.py will include the NewTopicTests class (view complete file contents)
+
+  - Accessing the Authenticated User
   
+  - Topic Posts View
+    - urls;py => path('boards/<int:pk>/topics/<int:topic_pk/', views.topic_posts, name='topic_posts'),
+    - boards/views.py
+    - templates/topic_posts.html
+    ```
+    {% extends 'base.html' %}
+
+     {% block title %}{{ topic.subject }}{% endblock %}
+    
+       {% block breadcrumb %}
+         <li class="breadcrumb-item"><a href="{% url 'home' %}">Boards</a></li>
+         <li class="breadcrumb-item"><a href="{% url 'board_topics' topic.board.pk %}">{{ topic.board.name }}</a></li>
+         <li class="breadcrumb-item active">{{ topic.subject }}</li>
+       {% endblock %}
+    {% block content %}
+    {% endblock %}
+    ```
+  - Some tests boards/tests/test_view_topic_posts.py
+    - run tests => python manage.py test boards
+    - run tests => python manage.py test boards.tests.test_view_topic_posts
+    - run tests => python manage.py test boards.tests.test_view_topic_posts.TopicPostsTests.test_status_code
   
+  - templates/topic_posts.html  
+    - baixar free image from   => https://www.iconfinder.com/search/?q=user&license=2&price=free
+    - carregado imagens no static/img/
+    - alterar avatar templates/topic_posts.html => <img src="{% static 'img/oper2.webp' %}"
+    
+  - Replay Post View
   
+
