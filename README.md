@@ -397,4 +397,75 @@ admin.site.register(Board)
     
   - Replay Post View
   
-
+  - QuerySets
+    - We have three tasks here:
+      - Display the posts count of the board;
+      - Display the topics count of the board;
+      - Display the last user who posted something and the date and time.
+     
+     - Define method __str__ for all boards models
+     - Via Python Shell terminal
+     ```
+     (myproject) myproject $ python manage.py shell
+      Python 3.8.1 (default, Apr 21 2020, 11:10:26) 
+      [GCC 7.5.0] on linux
+      Type "help", "copyright", "credits" or "license" for more information.
+      (InteractiveConsole)
+      >>> from boards.models import Board
+      >>> board = Board.objects.get(name='Django')
+      >>> board.topics.all()
+      <QuerySet [<Topic: Hello everyone>, 
+                 <Topic: Teste>, 
+                 <Topic: Novo Borad>, 
+                 <Topic: >, 
+                 <Topic: Ola Jorge>]>
+      >>> board.topics.count()
+      5
+      >>> from boards.models import Post
+      >>> Post.objects.all()
+      <QuerySet [<Post: This is the first topic. :-)>, 
+                 <Post: Teste today>, 
+                 <Post: Novo Board croado>, 
+                 <Post: >, <Post: >, 
+                 <Post: Jorge Tudo bem?>, 
+                 <Post: Bom dia Jorge. Tudo bem hoje?>, 
+                 <Post: Segund reply>]>
+      >>> Post.objects.count()
+      8
+     ```
+    
+     - How can we filter them
+     ```
+     (myproject) myproject $ mng shell
+     Python 3.8.1 (default, Apr 21 2020, 11:10:26) 
+     [GCC 7.5.0] on linux
+     Type "help", "copyright", "credits" or "license" for more information.
+     (InteractiveConsole)
+     >>> from boards.models import Board, Post
+     >>> board = Board.objects.get(name='Django')
+     >>> Post.objects.filter(topic__board=board)
+     <QuerySet [<Post: This is the first topic. :-)>, 
+                <Post: Bom dia Jorge. Tudo bem hoje?>, 
+                <Post: Segund reply>, <Post: Teste today>, 
+                <Post: Novo Board croado>, 
+                <Post: >, <Post: Jorge Tudo bem?>]>
+     >>> Post.objects.filter(topic__board=board).count()
+     7
+     ```
+     - The double underscores topic__board is used to navigate through the models’ relationships.
+     
+     - to identify the last post.
+     ```
+     >>> Post.objects.filter(topic__board=board).order_by('-created_at')
+     <QuerySet [<Post: Segund reply>, 
+                <Post: Bom dia Jorge. Tudo bem hoje?>, 
+                <Post: Jorge Tudo bem?>, 
+                <Post: >, 
+                <Post: Novo Board croado>, 
+                <Post: Teste today>, 
+                <Post: This is the first topic. :-)>]>
+     >>> Post.objects.filter(topic__board=board).order_by('-created_at').first()
+     <Post: Segund reply>
+     ```
+     - boards/models -> implementatio
+     - templates/home.html
