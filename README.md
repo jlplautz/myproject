@@ -469,3 +469,44 @@ admin.site.register(Board)
      ```
      - boards/models -> implementatio
      - templates/home.html
+  
+  - Melhorar Topic listing view  
+  ```
+  (myproject) myproject $ mng shell
+   Python 3.8.1 (default, Apr 21 2020, 11:10:26) 
+   [GCC 7.5.0] on linux
+   Type "help", "copyright", "credits" or "license" for more information.
+   (InteractiveConsole)
+   >>> from django.db.models import Count
+   >>> from boards.models import Board
+   >>> board = Board.objects.get(name='Django')
+   >>> topics = board.topics.order_by('-last_updated').annotate(replies=Count('posts'))
+   >>> for topic in topics:
+   ...    print(topic.replies)
+   ... 
+   1
+   1
+   1
+   1
+   3
+   >>> topics = board.topics.order_by('-last_updated').annotate(replies=Count('posts') - 1)
+   >>> for topic in topics:
+   ...    print(topic.replies)
+   ... 
+   0
+   0
+   0
+   0
+   2
+  ```
+  - Alterar boards/views.py
+  - Alterar templates/topics.html
+  
+  - Migrate adicionando a novo campo no Topic model
+    - class Topic => views = models.PositiveIntegerField(default=0)
+    - (myproject) myproject $ mng makemigrations
+    - (myproject) myproject $ mng migrate
+    - Alterar boards/views.py
+    - Alterar templates/topics.html
+  
+   
