@@ -509,4 +509,64 @@ admin.site.register(Board)
     - Alterar boards/views.py
     - Alterar templates/topics.html
   
-   
+- Cria GCBV - generic Class Based View
+  - Update View
+    - alterar boards/views.py => class PostUpdateView(UpdateView):
+    - alterar myproject/urls.py 
+      - path('boards/<int:pk>/topics/<int:topic_pk>/posts/<int:post_pk>/edit/', 
+              views.PostUpdateView.as_view(), name='edit_post'),
+    - alterar templates/topic_posts.html => <a href="{% url 'edit_post' post.topic.board.pk post.topic.pk post.pk %}"
+    - criar templates/edit_post.html
+    - criar file boards/tests/test_view_edit_post.py
+  
+  - List View
+    - Refazer algumas views para aproveitar as vantagens do CBV. Exemplo home.html
+    - alterar boards/views.py
+    - alterar boards/tests/test_view_home.py => def test_home_url_resolves_home_view(self):
+    
+  - Paginação - adicionar varios tops.
+    ```
+    (myproject) myproject $ mng shell
+    Python 3.8.1 (default, Apr 21 2020, 11:10:26) 
+    [GCC 7.5.0] on linux
+    Type "help", "copyright", "credits" or "license" for more information.
+    (InteractiveConsole)
+    >>> from django.contrib.auth.models import User
+    >>> from boards.models import Board, Topic, Post
+    >>> user = User.objects.first()
+    >>> board = Board.objects.get(name='Django')
+    >>> for i in range(100):
+    ...     subject = 'Topic test #{}'.format(i)
+    ...     topic = Topic.objects.create(subject=subject, board=board, starter=user)
+    ...     Post.objects.create(message='Lorem ipsum...', topic=topic, created_by=user)
+    ... 
+    ```
+    - FBV - Pagination Function-based views
+      - alterar boards/views.py => def board_topics(request, pk):
+      - alterar templates/topic.html => {% if topics.has_other_pages %}
+    
+    - GCBV - Generic Class Based View Pagination
+      - implementar usando ListView
+        - alterar boards/views.py => class TopicListView(ListView)
+        - myproject/urls.py => path('boards/<int:pk>/', views.TopicListView.as_view(), name='board_topics'),
+        - alterar templates/topic.html => {% if is_paginated %}
+     
+     - Reusable Paginatiom Template
+       - alterar boards/views.py => class TopicListView(ListView)
+       - myproject/urls.py => path('boards/<int:pk>/topics/<int:topic_pk>/', views.TopicListView.as_view(), name='topic_posts'),
+       - criar file templates/includes/pagination.html
+       - alterar templates/topic_posts.html => {% include 'includes/pagination.html' %}
+       - alterar templates/topic.html => {% include 'includes/pagination.html' %}
+  
+  - My Account View
+    - inserir no file accounts/views.py => class UserUpdateView(UpdateView):
+    - inserir no file myproject/urls.py 
+      - path('settings/account/', accounts_views.UserUpdateView.as_view(), name='my_account'),
+      
+  - Gravatar - uma maneira facil de adicionar foto no usewr profile
+    - no diretorio templatetags criar o file gravatar.py 
+    - abortei o precedimento do gravatar pois tem que abrit uma conta no gravatar.
+    
+  
+    
+    
