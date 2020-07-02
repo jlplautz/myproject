@@ -10,6 +10,7 @@ django = "*"
 flake8 = "*"
 pytest = "*"
 django-widget-tweaks = "*"
+markdown = "*"
 
 [requires]
 python_version = "3.8"

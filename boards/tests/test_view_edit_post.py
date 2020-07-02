@@ -42,7 +42,7 @@ class UnauthorizedPostUpdateViewTests(PostUpdateViewTestCase):
         super().setUp()
         username = 'jane'
         password = '321'
-        user = User.objects.create_user(username=username, email='jane@doe.com', password=password)
+        # user = User.objects.create_user(username=username, email='jane@doe.com', password=password)
         self.client.login(username=username, password=password)
         self.response = self.client.get(self.url)
 
