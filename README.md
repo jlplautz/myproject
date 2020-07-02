@@ -562,11 +562,27 @@ admin.site.register(Board)
     - inserir no file accounts/views.py => class UserUpdateView(UpdateView):
     - inserir no file myproject/urls.py 
       - path('settings/account/', accounts_views.UserUpdateView.as_view(), name='my_account'),
-      
+  
+  - Adicionar Markdown
+    - instalar lib markdown => myproject $ pipenv install markdown
+    - inserir metodo boards/models.py => def get_message_as_markdown(self):
+    - alterar templates/topic_posts.html => {{ post.message }} to {{ post.get_message_as_markdown }}
+    - alterar templates/reply_topic.html => {{ post.message }} to {{ post.get_message_as_markdown }}
+    - Inserir MakDown editor
+      - fazer download dos files => simplemde.min.ccs / simplemde.min.js inserir no static
+      - Alterar templates/base.html => {% block javascript %}{% endblock %}
+      - Alterar templates/reply_topic.html =>  {% block stylesheet %} e {% block javascript %}
+      - Alterar templates/edit_topic.html =>  {% block stylesheet %} e {% block javascript %}
+  
+  - Humanize   
+    -  add the django.contrib.humanize to the INSTALLED_APPS
+    - alterar templates/topics.html => {% load humanize %}
+
   - Gravatar - uma maneira facil de adicionar foto no usewr profile
     - no diretorio templatetags criar o file gravatar.py 
     - abortei o precedimento do gravatar pois tem que abrit uma conta no gravatar.
     
-  
+  - Ajustes finais
+    - 
     
     
